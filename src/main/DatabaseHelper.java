@@ -1,4 +1,4 @@
-// This class handles the MySQL connection
+package main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ public class DatabaseHelper
 {
     private static final String url = "jdbc:mysql://localhost:3306/TaskTrackerDB";
     private static final String user = "root";
-    private static final String password = "Spookzie@123";
+    private static final String password = "12345";
 
 
     public static Connection Connect()
@@ -20,13 +20,13 @@ public class DatabaseHelper
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection(url, user, password);
-            System.err.println("Connection established successfully");
+            // System.err.println("Connection established successfully");
 
         } catch (ClassNotFoundException e) {
-            System.err.println("MySQL Driver not found");
+            // System.err.println("MySQL Driver not found");
             e.printStackTrace();
         } catch (SQLException e) {
-            System.err.println("Connection Failed! Check the entered credentials");
+            // System.err.println("Connection Failed! Check the entered credentials");
             e.printStackTrace();
         }
 
@@ -40,7 +40,7 @@ public class DatabaseHelper
             if(connection != null)
             {
                 connection.close();
-                System.err.println("Database connection successfully closed");
+                // System.err.println("Database connection successfully closed");
             }
         } catch (SQLException e) {
             e.printStackTrace();
