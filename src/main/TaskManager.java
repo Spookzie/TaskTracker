@@ -52,9 +52,10 @@ public class TaskManager
             return null;
         }
 
-        // Getting all tasks
+        // Query
         String query = "SELECT * FROM tasks";
         
+        // Getting all the tasks
         try (PreparedStatement pst = con.prepareStatement(query)) {
 
             ResultSet rs = pst.executeQuery();
@@ -92,9 +93,9 @@ public class TaskManager
             return;
         }
 
-        // Updating the task
         String query = "UPDATE tasks SET status = ? WHERE id = ?";
         
+        // Updating the task
         try (PreparedStatement pst = con.prepareStatement(query)) {
 
             pst.setString(1, new_status);
@@ -103,7 +104,7 @@ public class TaskManager
             int rowsUpdated = pst.executeUpdate();
 
             if(rowsUpdated > 0)
-                System.out.println("Task " + id + "updated to " + new_status);
+                System.out.println("Task " + id + " status updated to " + new_status);
             else
                 System.out.println("No task found with ID " + id);
 
@@ -125,17 +126,34 @@ public class TaskManager
             return;
         }
 
-        // Deleting the task
-        String query = "DELETE FROM tasks WHERE id = ?";
+        // Queries 
+        String deleteQuery = "DELETE FROM tasks WHERE id = ?";
+        String countQuery  = "SELECT COUNT(*) FROM tasks";
+        String resetQuery  = "ALTER TABLE tasks AUTO_INCREMENT = 1"; 
         
-        try (PreparedStatement pst = con.prepareStatement(query)) {
-
+        // Deleting the task
+        try (PreparedStatement pst = con.prepareStatement(deleteQuery))
+        {
             pst.setInt(1, id);
-
             int rowsDeleted = pst.executeUpdate();
 
             if(rowsDeleted > 0)
+            {
                 System.out.println("Task " + id + " has been deleted");
+
+                // Check if the 'tasks' table is empty
+                try (Statement pstmt = con.createStatement())
+                {
+                    ResultSet rs = pstmt.executeQuery(countQuery);
+                    
+                    // Reset the ID
+                    if(rs.next() && rs.getInt(1) == 0)
+                    {
+                        pstmt.executeUpdate(resetQuery);
+                        System.out.println("The tasks list is now empty");
+                    }
+                }
+            }
             else
                 System.out.println("No task found with ID " + id);
 

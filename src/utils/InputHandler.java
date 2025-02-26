@@ -35,28 +35,20 @@ public class InputHandler
     
             switch (choice)
             {
-            case 1:
-                AddTask();
-                break;
+            case 1 -> AddTask();
 
-            case 2:
-                ViewTasks();
-                break;
+            case 2 -> ViewTasks();
             
-            case 3:
-                UpdateTask();
-                break;
+            case 3 -> UpdateTask();
             
-            case 4:
-                DeleteTask();
-                break;
+            case 4 -> DeleteTask();
             
-            case 5:
+            case 5 -> {
                 System.out.println("Ending Task Tracker...");
                 return;
+                }
             
-            default:
-                System.out.println("Invalid choice! Please try again");
+            default -> System.out.println("Invalid choice! Please try again");
             }
         }
     }
@@ -73,7 +65,6 @@ public class InputHandler
         System.out.println();
 
         taskManager.AddTask(title, desc);
-        System.out.println("Task added successfully!");
     }
 
     private void ViewTasks()
@@ -81,7 +72,7 @@ public class InputHandler
         List<String> tasks = taskManager.GetAllTasks();
 
         if(tasks.isEmpty())
-            System.out.println("No tasks are available");
+            System.out.println("\nNo tasks are available");
         else
         {
             System.out.println("\n=== Task List ===");
@@ -99,7 +90,6 @@ public class InputHandler
         System.out.println();
 
         taskManager.UpdateTask(id, status);
-        System.out.println("Task updated successfully!");
     }
 
     private void DeleteTask()
@@ -109,7 +99,6 @@ public class InputHandler
         System.out.println();
 
         taskManager.DeleteTask(id); 
-        System.out.println("Task deleted successfully!");       
     }
     //-----------------------------------------
 }
