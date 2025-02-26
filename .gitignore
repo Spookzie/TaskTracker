@@ -1,0 +1,8 @@
+# Ignore MySQL database files
+*.db
+*.frm
+*.ibd
+*.MYD
+*.MYI
+*.sqlite
+*.sql.bak
